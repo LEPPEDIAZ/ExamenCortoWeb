@@ -4,6 +4,69 @@
 //Se determina el estado inicial de la pagina
 
 //Se utilizo para el chequeo de las cajas
+
+let ganadora = null; 
+
+const EstadoInicial = (len) => {
+
+    return ({
+  
+        arreglodelmapa: Array.from({length: len}, (x, i) => Array.from({length: len}, (y, j) => null)),
+  
+        ganadora: null,
+  
+        jugadoractual: 0
+  
+       
+  
+    });
+  
+  };
+  
+  const columna = (colIndice, matriz) => {
+  
+  const memoria = matriz.map((column) => {
+  
+      return column[colIndice]
+  
+  });
+  
+  console.log(memoria);
+  
+  
+  
+  if (memoria.reduce((a, b) => {
+  
+          return (a === b) ? a : null;
+  
+      }) !== null) {
+  
+      ganadora = memoria[0];
+  
+  }
+  
+  };
+  
+  const fila = (filaI, matriz) => {
+  
+    console.log(matriz[filaI]);
+  
+    if (!matriz[filaI].includes(null)) {
+  
+        if (matriz[filaI].reduce((a, b) => {
+  
+                return (a === b) ? a : null;
+  
+            }) !== null) {
+  
+            ganadora = matriz[filaI][0];
+  
+        }
+  
+    }
+  
+  };
+  
   
   const render = (lState) => {
   
@@ -14,11 +77,54 @@
       root.innerHTML = null;
   }
 
+  
+    (column, filaI) => {
+        //se crea el div del tamano definido
+        const rowElement = document.createElement('div');
+        column.forEach(
+            (col, colIndice) => {
+                //se crea el div del tablero y se definen las lineas
+                const tablero = document.createElement('div');
+                if (ganadora === null) {
+                  tablero.onclick = () => {
+                      //se crea la opcion de x y y, para el cambio de variables
+                        if (lState.arreglodelmapa[filaI][colIndice] === null) {
+                            //se define el div.o y div.x para sacar la imagen
+                            tablero.classList.add((lState.jugadoractual) ? 'o' : 'x');
+                            lState.arreglodelmapa[filaI][colIndice] = lState.jugadoractual;
+                            lState.jugadoractual = (lState.jugadoractual === 0) ? 1 : 0;
+                            render(lState); //valida el cambio de x a y 
+                            verganadorfila(lState.arreglodelmapa);
+                            verganadorcolumna(lState.arreglodelmapa);
+                            //verganadordiagonal(lState.arreglodelmapa);
+
+                
+                        } 
+                    };
+                }
+                if (lState.arreglodelmapa[filaI][colIndice] !== null) {
+                    tablero.classList.add((lState.arreglodelmapa[filaI][colIndice]) ? 'o' : 'x');
+                  }
+                rowElement.appendChild(tablero);
+            }
+        );
+        totito.appendChild(rowElement);
+    }
+
+  
     const cabeza = document.createElement('div');
   
     cabeza.className = `cabeza`;
   
+    
+  //Se determina el encabezado en donde se encuentran los botones
+    for (let i = 0; i < lState.estados.length; i++){
   
+      const tab = Actividad(lState, i);
+  
+      cabeza.appendChild(tab);
+  
+    }
   
     //se determinan las bandejas y el nombre
   
@@ -26,10 +132,8 @@
   
     bandejas.className = 'bandejas';
 
-    
-
     const title = document.createElement('h1');
-    title.innerHTML = 'CORTO WEB';
+    title.innerHTML = 'BANDEJA DE TAREAS';
   
   
 
@@ -64,43 +168,36 @@
   
     escribir.className = 'escribir';
 
+    const checkbox = document.createElement('input');
+  
+    checkbox.setAttribute('type', 'checkbox');
+  
+    checkbox.className = 'checkbox';
+    const checkbox1 = document.createElement('input');
+  
+    checkbox1.setAttribute('type', 'checkbox');
+  
+    checkbox1.className = 'checkbox1';
+    const checkbox2 = document.createElement('input');
+  
+    checkbox2.setAttribute('type', 'checkbox');
+  
+    checkbox2.className = 'checkbox2';
+
+    
+    
  
     const nuevo = document.createElement('button');
   
     nuevo.className = 'nuevo';
   
-    nuevo.innerHTML = 'Generar';
-
-    const nuevo1 = document.createElement('div');
-  
-    nuevo1.className = 'nuevo1';
-
-    const nuevo2 = document.createElement('div');
-  
-    nuevo2.className = 'nuevo2';
-
-    const nuevo3 = document.createElement('div');
-  
-    nuevo3.className = 'nuevo3';
-
-    const nuevo4 = document.createElement('div');
-  
-    nuevo4.className = 'nuevo4';
-  
-  
-  
+    nuevo.innerHTML = 'NUEVA TAREA';
   
     // se le determina que al apachar submit se envia el texto
   
     nuevo.onclick = () => {
-    enviar.appendChild(nuevo1);
-    enviar.appendChild(nuevo2);
-    enviar.appendChild(nuevo3);
-    enviar.appendChild(nuevo4);
     escrbir(escribir, lState);
-    question1();
-    show_now();
-    alert("La grafica se despliega justo al lado");
+    alert("Se a ingresado una nueva tarea");
   };
   
   
@@ -110,14 +207,17 @@
     root.appendChild(title);
     root.appendChild(cabeza);
     root.appendChild(bandejas);
+    root.appendChild(checkbox);
+    root.appendChild(checkbox1);
+    root.appendChild(checkbox2);
+    root.appendChild(completado);
     root.appendChild(enviar);
-
   
   }
   
   const state = {
 
-    estados: ['TODOS', 'COMPLETADOS'],
+    estados: ['TODOS', 'COMPLETADOS', 'ACTIVOS'],
   
     activo: 0,
   
@@ -135,6 +235,7 @@
   
     .then( responseJSON => { responseJSON.forEach( (element) => state.data.push(element) ) })
   
+    .then( () => render(state))
   
     
   
@@ -185,6 +286,7 @@
   
     }
   
+  
     work.onclick = (self) => {
     workClick(self.target, lState, i);
   }
@@ -234,7 +336,7 @@
   const EncenderClick = (self, lState) => {
   
     lState.activo = parseInt(self.className.split(' ')[1]);
-   
+    alert("Los resultados se encuentran filtrados segun lo seleccionado");
   
     render(lState)
   

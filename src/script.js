@@ -1,24 +1,7 @@
-function addItem(){
-    var ul = document.getElementById("dynamic-list");
-    var candidate = document.getElementById("candidate");
-    var li = document.createElement("li");
-    li.setAttribute('id',candidate.value);
-    li.appendChild(document.createTextNode(candidate.value));
-    ul.appendChild(li);
-}
-
-function removeItem(){
-    var ul = document.getElementById("dynamic-list");
-    var candidate = document.getElementById("candidate");
-    var item = document.getElementById(candidate.value);
-    ul.removeChild(item);
-}
-function myFunction() {
-    var checkBox = document.getElementById("dynamic-list");
-    var text = document.getElementById("text");
-    if (checkBox.checked == true){
-        text.style.display = "block";
+function question1() {
+    if (value == 1) {
+       window.alert("correct!");
     } else {
-       text.style.display = "none";
+       window.alert("try again);
     }
-}
+  }

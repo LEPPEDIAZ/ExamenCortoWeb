@@ -18,7 +18,15 @@
   
     cabeza.className = `cabeza`;
   
+    
+  //Se determina el encabezado en donde se encuentran los botones
+    for (let i = 0; i < lState.estados.length; i++){
   
+      const tab = Actividad(lState, i);
+  
+      cabeza.appendChild(tab);
+  
+    }
   
     //se determinan las bandejas y el nombre
   
@@ -64,43 +72,21 @@
   
     escribir.className = 'escribir';
 
+
+    
+    
  
     const nuevo = document.createElement('button');
   
     nuevo.className = 'nuevo';
   
     nuevo.innerHTML = 'Generar';
-
-    const nuevo1 = document.createElement('div');
-  
-    nuevo1.className = 'nuevo1';
-
-    const nuevo2 = document.createElement('div');
-  
-    nuevo2.className = 'nuevo2';
-
-    const nuevo3 = document.createElement('div');
-  
-    nuevo3.className = 'nuevo3';
-
-    const nuevo4 = document.createElement('div');
-  
-    nuevo4.className = 'nuevo4';
-  
-  
-  
   
     // se le determina que al apachar submit se envia el texto
   
     nuevo.onclick = () => {
-    enviar.appendChild(nuevo1);
-    enviar.appendChild(nuevo2);
-    enviar.appendChild(nuevo3);
-    enviar.appendChild(nuevo4);
     escrbir(escribir, lState);
-    question1();
-    show_now();
-    alert("La grafica se despliega justo al lado");
+    alert("Se a ingresado un nuevo numero");
   };
   
   
@@ -111,7 +97,6 @@
     root.appendChild(cabeza);
     root.appendChild(bandejas);
     root.appendChild(enviar);
-
   
   }
   
@@ -184,6 +169,7 @@
       work.className = `${work.className} elemento`;
   
     }
+  
   
     work.onclick = (self) => {
     workClick(self.target, lState, i);

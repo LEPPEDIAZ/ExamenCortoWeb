@@ -145,6 +145,59 @@ h1 {
   
   
 }
+.nuevo1 {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  width: 2rem;
+  height: 4rem;
+  background-color: orange;
+  color:white;
+  border-radius: 1rem;
+  margin: 3rem;
+  
+  
+}
+.nuevo2 {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  width: 2rem;
+  height: 10rem;
+  background-color: orange;
+  color:white;
+  border-radius: 1rem;
+  margin: 3rem;
+  
+}
+.nuevo3 {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  width: 2rem;
+  height: 14rem;
+  background-color: orange;
+  color:white;
+  border-radius: 1rem;
+  margin: 3rem;
+  
+}
+.nuevo4 {
+  display: inline-block;
+  font-size: 2rem;
+  padding: 1rem 0;
+  text-align: center;
+  width: 2rem;
+  height: 18rem;
+  background-color: orange;
+  color:white;
+  border-radius: 1rem;
+  margin: 3rem;
+  
+}
 .bandejas {
   display: inline-block;
   margin-left: 4rem;
